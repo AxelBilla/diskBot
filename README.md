@@ -1,10 +1,8 @@
 # diskBot
 
-//// HELLO THERE ////
 
-Discord bot I made at a friend's request.
+Discord bot I made at my friend's request.
 
- ////  ////  ////  ////  ////
 
 ## Commands
 
