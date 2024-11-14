@@ -15,7 +15,7 @@ Displays a random line from the server's saved line file.
 Adds a new line to the server's saved line file.
 
 ### /del_disk
-Removes a line by its contentor id / all lines from the server's saved line file.
+Removes a line by its content or id (/all lines) from the server's saved line file.
 
 ### /see_disk
 Displays a list of the server's lines from the saved line file.
