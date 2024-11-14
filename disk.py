@@ -36,10 +36,10 @@ async def addHorn(ctx, txt: str):
     file = open(path + "/" + "data.json", "a")
     file.write(txt+"\n")
     await ctx.response.send_message(f"\"{txt}\" was successfully added!", ephemeral=True)
-    
+
 @bot.tree.command(name='del_disk', description="Remove a line by its content or id from the server's saved pickup lines (* to remove every line).")
 @app_commands.checks.has_permissions(administrator=True)
-async def addHorn(ctx, txt: str):
+async def delHorn(ctx, txt: str):
     file = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.json", "r")
     wordList=file.readlines()
     check=True
@@ -76,4 +76,9 @@ async def checkHorn(ctx):
             outString=outString+f"[{i+1}]: \"{wordList[i]}\"\n"
         await ctx.response.send_message(outString, ephemeral=True)
 
+@bot.tree.error
+async def on_command_error(ctx, error):
+    if isinstance(error, app_commands.MissingPermissions):
+        await ctx.response.send_message('You do not have the permission(s) to do this.', ephemeral=True)
+    
 bot.run(token)
