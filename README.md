@@ -3,6 +3,8 @@
 
 Discord bot I made at my friend's request.
 
+[ADD THIS BOT TO YOUR SERVER](https://discord.com/oauth2/authorize?client_id=1306356201017184298)
+
 
 ## Commands
 
