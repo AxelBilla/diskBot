@@ -27,7 +27,7 @@ async def returnHorn(ctx):
         await ctx.response.send_message(wordList[randint(0,int(len(wordList)-1))])
 
 @bot.tree.command(name='add_disk', description="Add a new line to the server's saved pickup lines.")
-@app_commands.checks.has_role("membre confirmé·e")
+@app_commands.checks.has_permissions(administrator=True)
 async def addHorn(ctx, txt: str):
     path = dir+"/serverData/" + str(ctx.guild.id)
     if not os.path.exists(path):
