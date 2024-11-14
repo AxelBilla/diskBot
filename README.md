@@ -6,7 +6,7 @@ Discord bot I made at a friend's request.
 
  ////  ////  ////  ////  ////
 
-##Commands
+## Commands
 
 ### /disk
 Displays a random line from the server's saved line file.
