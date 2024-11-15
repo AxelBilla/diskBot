@@ -8,7 +8,7 @@ Discord bot I made at my friend's request.
 
 ## Regular Commands
 
-### /disk | {@user}
+### /disk | [@user]
 Displays a random line from the server's saved line file.
 **[Available to @everyone]**
 
