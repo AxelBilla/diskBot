@@ -2,6 +2,7 @@
 
 import os
 import discord
+import typing
 from discord import app_commands
 from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
@@ -115,16 +116,23 @@ async def setupAllowedRole(ctx, role: str):
     await ctx.response.send_message(f"\"{role}\" has been made the server's only role with access to the advanced commands!", ephemeral=True)
 
 @bot.tree.command(name='disk', description="Display a random line from the server's saved pickup lines.")
-async def returnHorn(ctx):
+async def returnHorn(ctx, mention: typing.Optional[str]=''):
     addPath(ctx)
     print(f"\n\n\n{ctx.user.name} is trying to access a command.\n[ID]: {ctx.user.id}, [SERVER]: {ctx.guild.name}\n[/disk] ")
     file = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.txt", "r")
     wordList=file.readlines()
     file.close()
-    if len(wordList)<=1:
-        await ctx.response.send_message("I don't have anything to say.")
-    else:
-        await ctx.response.send_message(wordList[randint(1,int(len(wordList)-1))])
+    print("Mention: ", mention)
+    if mention != '':
+        if len(wordList)<=1:
+            await ctx.response.send_message(f"I don't have anything to tell, {mention}.")
+        else:
+            await ctx.response.send_message(f"{mention}, {wordList[randint(1,int(len(wordList)-1))]}")
+    else: 
+        if len(wordList)<=1:
+            await ctx.response.send_message("I don't have anything to tell you.")
+        else:
+            await ctx.response.send_message(wordList[randint(1,int(len(wordList)-1))])
 
 @bot.tree.command(name='add_disk', description="Add a new line to the server's saved pickup lines.")
 @app_commands.check(allowedRoleCheck)
@@ -138,7 +146,7 @@ async def addHorn(ctx, txt: str):
     await ctx.response.send_message(f"\"{txt}\" was successfully added!", ephemeral=True)
 
 @bot.tree.command(name='del_disk', description="Remove a line by its content or id from the server's saved pickup lines (* to remove every line).")
-@app_commands.check(allowedRoleCheck)
+@app_commands.check(owner_admin)
 async def delHorn(ctx, txt: str):
     print("[/del_disk]")
     file = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.txt", "r")
@@ -158,7 +166,8 @@ async def delHorn(ctx, txt: str):
     else:
         for i in range(len(wordList)):
             if wordList[i]==txt+"\n" or str(i+1)==txt:
-                print(f'They removed a line.\n[ID]: {i+1} has been deleted\n[CONTENT]: "{str(wordList[i+1].strip('\n'))}"')
+                ted=str(wordList[i+1].strip("\n"))
+                print(f'They removed a line.\n[ID]: {i+1} has been deleted\n[CONTENT]: "{ted}"')
                 wordList.pop(i+1)
                 fileWrite = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.txt", "w")
                 fileWrite.writelines(wordList)
@@ -170,7 +179,7 @@ async def delHorn(ctx, txt: str):
             await ctx.response.send_message(f"\"{txt}\" couldn't be found!")
 
 @bot.tree.command(name='see_disk', description="Display a list of a server's saved pickup lines.")
-@app_commands.check(allowedRoleCheck)
+@app_commands.check(owner_admin)
 async def checkHorn(ctx):
     print("[/see_disk]")
     file = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.txt", "r")
