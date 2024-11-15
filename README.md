@@ -8,7 +8,7 @@ Discord bot I made at my friend's request.
 
 ## Regular Commands
 
-### /disk
+### /disk | {@user}
 Displays a random line from the server's saved line file.
 **[Available to @everyone]**
 
@@ -20,11 +20,11 @@ Adds a new line to the server's saved line file.
 
 ### /del_disk [name/ID/*]
 Removes a line by its content or ID (/all lines) from the server's saved line file.
-**[Only accessible with an allowed role]** / **[Administrator-only]**
+**[Administrator-only]**
 
 ### /see_disk
 Displays a list of the server's lines from the saved line file.
-**[Only accessible with an allowed role]** / **[Administrator-only]**
+**[Administrator-only]**
 
 ## Administrator Commands
 
