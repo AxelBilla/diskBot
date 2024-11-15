@@ -189,11 +189,20 @@ async def checkHorn(ctx):
     if len(wordList)<=1:
         await ctx.response.send_message("You currently do not have any saved pickup lines.", ephemeral=True)
     else:
+        rowSize=0
         for i in range(len(wordList)):
             if i != 0:
                 wordList[i]=wordList[i].strip("\n")
                 outString=outString+f"[{i}]: \"{wordList[i]}\"\n"
-        await ctx.response.send_message(outString, ephemeral=True)
+                rowSize=rowSize+1
+                if rowSize == 10:
+                    if i == 10:
+                        await ctx.response.send_message(f'[LIST OF SAVED LINES]\n{outString}', ephemeral=True)
+                    else:
+                        await ctx.followup.send(outString, ephemeral=True)
+                    outString=''
+                    rowSize=0
+        await ctx.followup.send(outString, ephemeral=True)
 
 @bot.tree.error
 async def on_command_error(ctx, error):
