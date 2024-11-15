@@ -116,7 +116,7 @@ async def setupAllowedRole(ctx, role: str):
     fileWrite.close()
     await ctx.response.send_message(f"\"{role}\" has been made the server's only role with access to the advanced commands!", ephemeral=True)
 
-@bot.tree.command(name='disk', description="Display a random line from the server's saved pickup lines.")
+@bot.tree.command(name='disk', description="Display a random line from the server's saved lines.")
 async def returnHorn(ctx, mention: typing.Optional[str]=''):
     addPath(ctx)
     print(f"\n\n\n{ctx.user.name} is trying to access a command.\n[ID]: {ctx.user.id}, [SERVER]: {ctx.guild.name}\n\n[/disk] ")
@@ -135,7 +135,7 @@ async def returnHorn(ctx, mention: typing.Optional[str]=''):
         else:
             await ctx.response.send_message(wordList[randint(1,int(len(wordList)-1))])
 
-@bot.tree.command(name='add_disk', description="Add a new line to the server's saved pickup lines.")
+@bot.tree.command(name='add_disk', description="Add a new line to the server's saved lines.")
 @app_commands.check(allowedRoleCheck)
 async def addHorn(ctx, txt: str):
     print("[/add_disk]")
@@ -146,7 +146,7 @@ async def addHorn(ctx, txt: str):
     file.close()
     await ctx.response.send_message(f"\"{txt}\" was successfully added!", ephemeral=True)
 
-@bot.tree.command(name='del_disk', description="Remove a line by its content or id from the server's saved pickup lines (* to remove every line).")
+@bot.tree.command(name='del_disk', description="Remove a line by its content or id from the server's saved lines (* to remove every line).")
 @app_commands.check(allowedRoleCheck)
 async def delHorn(ctx, txt: str):
     print("[/del_disk]")
@@ -155,7 +155,7 @@ async def delHorn(ctx, txt: str):
     file.close()
     check=True
     if len(wordList)<=1:
-        await ctx.response.send_message("You currently do not have any saved pickup lines.", ephemeral=True)
+        await ctx.response.send_message("You currently do not have any saved lines.", ephemeral=True)
     elif txt=="*":
         if ctx.user.guild_permissions.administrator == True or ctx.user.id == owner_id:
             print("They're an administrator or this bot's owner.\n")
@@ -165,7 +165,7 @@ async def delHorn(ctx, txt: str):
             fileWrite = open(dir+"/serverData/" + str(ctx.guild.id) + "/" + "data.txt", "w")
             fileWrite.writelines(wordList)
             fileWrite.close()
-            await ctx.response.send_message(f"Saved pick up lines successfully cleared!", ephemeral=True)
+            await ctx.response.send_message(f"Saved lines successfully cleared!", ephemeral=True)
         else:
             print("They do not have an allowed role nor are they this bot's owner\n\n\n")
             await ctx.response.send_message('You do not have the permission(s) required to do this.', ephemeral=True)
@@ -182,9 +182,9 @@ async def delHorn(ctx, txt: str):
                 check=False
                 break
         if check:
-            await ctx.response.send_message(f"\"{txt}\" couldn't be found!")
+            await ctx.response.send_message(f"\"{txt}\" couldn't be found!", ephemeral=True)
 
-@bot.tree.command(name='see_disk', description="Display a list of a server's saved pickup lines.")
+@bot.tree.command(name='see_disk', description="Display a list of a server's saved lines.")
 @app_commands.check(allowedRoleCheck)
 async def checkHorn(ctx):
     print("[/see_disk]")
@@ -193,7 +193,7 @@ async def checkHorn(ctx):
     file.close()
     outString=""
     if len(wordList)<=1:
-        await ctx.response.send_message("You currently do not have any saved pickup lines.", ephemeral=True)
+        await ctx.response.send_message("You currently do not have any saved lines.", ephemeral=True)
     else:
         rowSize=0
         for i in range(len(wordList)):
