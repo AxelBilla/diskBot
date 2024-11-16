@@ -25,6 +25,18 @@ def addPath(ctx):
         file.writelines(word)
         file.close()
 
+def first_lower(s):
+    if not s:
+        return 
+    else:
+        return s[0].lower() + s[1:]
+
+def first_upper(s):
+    if not s:
+        return 
+    else:
+        return s[0].upper() + s[1:]
+
 @bot.event
 async def owner_admin(ctx): #Allows me to debug stuff at will.
     print(f"\n\n\n{ctx.user.name} is trying to access a reserved ADMIN command.\n[ID]: {ctx.user.id}, [SERVER]: {ctx.guild.name}")
@@ -128,12 +140,12 @@ async def returnHorn(ctx, mention: typing.Optional[str]=''):
         if len(wordList)<=1:
             await ctx.response.send_message(f"I don't have anything to tell, {mention}.")
         else:
-            await ctx.response.send_message(f"{mention}, {wordList[randint(1,int(len(wordList)-1))]}")
+            await ctx.response.send_message(f"{mention}, {first_lower(wordList[randint(1,int(len(wordList)-1))])}")
     else: 
         if len(wordList)<=1:
             await ctx.response.send_message("I don't have anything to tell you.")
         else:
-            await ctx.response.send_message(wordList[randint(1,int(len(wordList)-1))])
+            await ctx.response.send_message(first_upper(wordList[randint(1,int(len(wordList)-1))]))
 
 @bot.tree.command(name='add_disk', description="Add a new line to the server's saved lines.")
 @app_commands.check(allowedRoleCheck)
@@ -170,8 +182,8 @@ async def delHorn(ctx, txt: str):
             print("They do not have an allowed role nor are they this bot's owner\n\n\n")
             await ctx.response.send_message('You do not have the permission(s) required to do this.', ephemeral=True)
     else:
-        for i in range(len(wordList)):
-            if wordList[i]==txt+"\n" or str(i+1)==txt:
+        for i in range(len(wordList)-1):
+            if wordList[i+1]==txt+"\n" or str(i+1)==txt:
                 ted=str(wordList[i+1].strip("\n"))
                 print(f'They removed a line.\n[ID]: {i+1} has been deleted\n[CONTENT]: "{ted}"')
                 wordList.pop(i+1)
@@ -208,7 +220,7 @@ async def checkHorn(ctx):
                         await ctx.followup.send(outString, ephemeral=True)
                     outString=''
                     rowSize=0
-        if rowSize < 10: 
+        if i <= 10: 
             await ctx.response.send_message(f'[LIST OF SAVED LINES]\n{outString}', ephemeral=True)
         else:
             await ctx.followup.send(outString, ephemeral=True)
