@@ -18,7 +18,7 @@ Displays a random line from the server's saved line file.
 Adds a new line to the server's saved line file.
 **[Only accessible with an allowed role]**
 
-### /del_disk [name/ID/*]
+### /del_disk [string/ID/*]
 Removes a line by its content or ID (/all lines) from the server's saved line file.
 **[Only accessible with an allowed role]** /// **[Administrator-only]** (for all lines)
 
@@ -28,7 +28,7 @@ Displays a list of the server's lines from the saved line file.
 
 ## Administrator Commands
 
-### /role_disk [name]
+### /role_disk [role_name]
 Transfer the access to the advanced commands from the previous role to a newly given one (i.e, "moderator")
 **[Administrator-only]**
 
