@@ -9,7 +9,7 @@ from discord.ext.commands import has_permissions, MissingPermissions
 from random import randint
 from private.config import token
 
-owner_id=1242535080866349226
+owner_id=
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='/', intents=intents, owner_id = owner_id)
